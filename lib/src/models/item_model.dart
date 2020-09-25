@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:news/generated/json/base/json_convert_content.dart';
 import 'package:news/src/models/dto_item_entity.dart';
 
@@ -30,4 +32,37 @@ class ModelItem {
         score = dto.score,
         title = dto.title,
         descendants = dto.descendants;
+
+  ModelItem.fromDbMap(Map<String, dynamic> dbMap) :
+        id = dbMap['id'],
+        deleted = dbMap['deleted'] == 1,
+        url = dbMap['url'],
+        dead = dbMap['dead'] == 1,
+        parent = dbMap['parent'],
+        type = dbMap['type'],
+        by = dbMap['by'],
+        time = dbMap['time'],
+        text = dbMap['text'],
+        kids = jsonDecode(dbMap['kids'] ?? "[]"),
+        score = dbMap['score'],
+        title = dbMap['title'],
+        descendants = dbMap['descendants'];
+
+  Map<String, dynamic> toMapForDb(){
+    return <String, dynamic>{
+      "id": id,
+      "deleted": deleted ? 1 : 0,
+      "url": url,
+      "dead": dead ? 1 : 0,
+      "parent": parent,
+      "type": type,
+      "by": by,
+      "time": time,
+      "text": text,
+      "kids": jsonEncode(kids),
+      "score": score,
+      "title": title,
+      "descendants": descendants
+    };
+  }
 }
