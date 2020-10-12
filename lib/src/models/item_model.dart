@@ -20,18 +20,18 @@ class ModelItem {
   final int descendants;
 
   ModelItem.fromDto(DtoItemEntity dto) : id = dto.id,
-        deleted = dto.deleted,
+        deleted = dto.deleted ?? false,
         url = dto.url,
-        dead = dto.dead,
+        dead = dto.dead ?? false,
         parent = dto.parent,
         type = dto.type,
         by = dto.by,
         time = dto.time,
-        text = dto.text,
-        kids = dto.kids,
+        text = dto.text ?? '',
+        kids = dto.kids ?? [],
         score = dto.score,
         title = dto.title,
-        descendants = dto.descendants;
+        descendants = dto.descendants ?? 0;
 
   ModelItem.fromDbMap(Map<String, dynamic> dbMap) :
         id = dbMap['id'],
